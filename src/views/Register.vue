@@ -28,11 +28,7 @@
         >
       </div>
 
-      <b-button
-        native-type="submit"
-        class="is-primary"
-        :type="loading && 'is-loading'"
-        :disabled="!checked"
+      <b-button native-type="submit" :type="btnType" :disabled="!checked"
         >Register</b-button
       >
     </form>
@@ -55,19 +51,19 @@ export default {
       errorMessage: "",
       checked: false,
       notifType: "",
-      loading: false,
+      btnType: "is-primary",
     };
   },
   methods: {
     register() {
-      this.loading = true;
+      this.btnType = "is-primary is-loading";
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.email, this.password)
         .then(
           () => {
             this.notifType = "is-light is-success";
-            this.loading = false;
+            this.btnType = "is-primary";
             this.isActive = true;
             this.errorMessage =
               "You have succsesfully registered and now logged in";
@@ -76,7 +72,7 @@ export default {
             this.notifType = "is-light is-danger";
             this.isActive = true;
             this.errorMessage = error.message;
-            this.loading = false;
+            this.btnType = "is-primary";
           }
         );
     },

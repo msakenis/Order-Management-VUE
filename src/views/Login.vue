@@ -27,12 +27,7 @@
         </b-input>
       </b-field>
 
-      <b-button
-        native-type="submit"
-        class="is-primary"
-        :type="loading && 'is-loading'"
-        >Login</b-button
-      >
+      <b-button native-type="submit" :type="btnType">Login</b-button>
     </form>
   </div>
 </template>
@@ -51,22 +46,22 @@ export default {
       password: "",
       isActive: false,
       errorMessage: "",
-      loading: false,
+      btnType: "is-primary",
     };
   },
   methods: {
     login() {
-      this.loading = true;
+      this.btnType = "is-primary is-loading";
       firebase
         .auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
           () => {
-            this.loading = false;
+            this.btnType = "is-primary";
             this.$router.push("/home");
           },
           (error) => {
-            this.loading = false;
+            this.btnType = "is-primary";
             this.isActive = true;
             this.errorMessage = error.message;
           }
