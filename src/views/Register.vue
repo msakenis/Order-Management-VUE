@@ -1,12 +1,7 @@
 <template>
-  <div class="login">
-    <Notification
-      v-if="isActive"
-      type="is-light is-danger"
-      :message="errorMessage"
-    />
-
-    <form v-on:submit.prevent="login">
+  <div class="register">
+    <Notification v-if="isActive" :type="notifType" :message="errorMessage" />
+    <form v-on:submit.prevent="register()">
       <b-field label="Email">
         <b-input
           type="email"
@@ -27,11 +22,18 @@
         </b-input>
       </b-field>
 
+      <div class="field">
+        <b-checkbox v-model="checked">
+          I agree to the <a href="#">terms and conditions</a></b-checkbox
+        >
+      </div>
+
       <b-button
         native-type="submit"
         class="is-primary"
         :type="loading && 'is-loading'"
-        >Login</b-button
+        :disabled="!checked"
+        >Register</b-button
       >
     </form>
   </div>
@@ -43,7 +45,7 @@ import "firebase/auth";
 import Notification from "../components/Notification";
 
 export default {
-  name: "Login",
+  name: "Register",
   components: { Notification },
   data() {
     return {
@@ -51,24 +53,30 @@ export default {
       password: "",
       isActive: false,
       errorMessage: "",
+      checked: false,
+      notifType: "",
       loading: false,
     };
   },
   methods: {
-    login() {
+    register() {
       this.loading = true;
       firebase
         .auth()
-        .signInWithEmailAndPassword(this.email, this.password)
+        .createUserWithEmailAndPassword(this.email, this.password)
         .then(
           () => {
-            this.loading = false;
-            this.$router.push("/home");
-          },
-          (error) => {
+            this.notifType = "is-light is-success";
             this.loading = false;
             this.isActive = true;
+            this.errorMessage =
+              "You have succsesfully registered and now logged in";
+          },
+          (error) => {
+            this.notifType = "is-light is-danger";
+            this.isActive = true;
             this.errorMessage = error.message;
+            this.loading = false;
           }
         );
     },
@@ -77,7 +85,7 @@ export default {
 </script>
 
 <style scoped>
-.login {
+.register {
   max-width: 600px;
 }
 </style>
