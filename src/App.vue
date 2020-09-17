@@ -1,5 +1,9 @@
 <template>
   <div id="app">
+    <div class="container">
+      <Navigation />
+    </div>
+
     <section class="section">
       <div class="container">
         <h1 class="title">{{ $route.name }}</h1>
@@ -9,4 +13,9 @@
   </div>
 </template>
 
-<script></script>
+<script>
+import Navigation from "./components/Navigation";
+export default {
+  components: { Navigation },
+};
+</script>
