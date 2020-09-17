@@ -62,10 +62,36 @@
         </b-field>
       </b-field>
 
-      <b-field label="Order Information" grouped group-multiline>
+      <b-field
+        class="clientSection order"
+        label="Order Information"
+        grouped
+        group-multiline
+      >
         <b-field>
-          <b-input v-model="name" placeholder="Name and Surname"></b-input>
+          <b-input placeholder="Product codes"></b-input>
         </b-field>
+        <b-field>
+          <b-input placeholder="Size"></b-input>
+        </b-field>
+        <b-field expanded>
+          <b-input placeholder="Products Description"></b-input>
+        </b-field>
+      </b-field>
+
+      <b-field class="clientSection2">
+        <b-input type="number" placeholder="Order value"></b-input>
+        <p class="control">
+          <span class="button is-static"><i class="fas fa-euro-sign"></i></span>
+        </p>
+      </b-field>
+
+      <b-field
+        class="clientSection order"
+        label="Delivery Information"
+        grouped
+        group-multiline
+      >
       </b-field>
     </form>
   </div>
@@ -84,9 +110,12 @@ export default {
 
 <style scoped>
 .clientSection {
-  max-width: 800px;
+  max-width: 960px;
 }
 .clientSection2 {
   margin-top: 25px;
+}
+.order {
+  margin-top: 35px;
 }
 </style>
