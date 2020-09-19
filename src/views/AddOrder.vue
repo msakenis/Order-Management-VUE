@@ -26,7 +26,7 @@
 				</b-field>
 			</b-field>
 
-			<b-field class="clientSection" label="Client's Contact Information" grouped group-multiline>
+			<b-field class="sectionWidth" label="Client's Contact Information" grouped group-multiline>
 				<b-field>
 					<b-input placeholder="Name and Surname"></b-input>
 				</b-field>
@@ -35,7 +35,7 @@
 				</b-field>
 			</b-field>
 
-			<b-field class="clientSection clientSection2" grouped group-multiline>
+			<b-field class="sectionWidth" grouped group-multiline>
 				<b-field>
 					<b-input id="labas" placeholder="City"></b-input>
 				</b-field>
@@ -50,7 +50,7 @@
 				</b-field>
 			</b-field>
 
-			<b-field class="clientSection order" label="Order Information" grouped group-multiline>
+			<b-field class="sectionWidth" label="Order Information" grouped group-multiline>
 				<b-field>
 					<b-input placeholder="Product codes"></b-input>
 				</b-field>
@@ -71,7 +71,7 @@
 				</p>
 			</b-field>
 
-			<b-field class="clientSection order" label="Delivery Information" grouped group-multiline>
+			<b-field label="Delivery Information" grouped group-multiline>
 				<b-field>
 					<b-select @input="deliveryDependency()" placeholder="Select delivery method">
 						<option
@@ -84,6 +84,27 @@
 				<b-field id="deliverySection1"></b-field>
 				<b-field id="deliverySection2"></b-field>
 			</b-field>
+
+			<b-field label="Status Information" grouped group-multiline>
+				<div class="field">
+					<b-checkbox>PAID</b-checkbox>
+				</div>
+				<div class="field">
+					<b-checkbox>Ordered from supplier</b-checkbox>
+				</div>
+				<div class="field">
+					<b-checkbox>Sent to Client</b-checkbox>
+				</div>
+			</b-field>
+			<b-field class="sectionWidth" grouped group-multiline>
+				<b-field>
+					<b-input placeholder="Tracking no."></b-input>
+				</b-field>
+				<b-field>
+					<b-input placeholder="Supplier order no."></b-input>
+				</b-field>
+			</b-field>
+			<b-button native-type="submit" :type="btnType">Confirm</b-button>
 		</form>
 	</div>
 </template>
@@ -100,6 +121,7 @@
 					{ id: 3, method: "LP EXPRESS" },
 					{ id: 4, method: "Kita" },
 				],
+				btnType: "is-primary",
 			};
 		},
 		methods: {
@@ -116,11 +138,11 @@
 						.then((res) => res.json())
 						.then((data) => {
 							field1.innerHTML = `<div class="select">
-			              <select id="deliverySelect"></select>
-			            </div>`;
+																																									              <select id="deliverySelect"></select>
+																																									            </div>`;
 							field2.innerHTML = `<div class="control is-clearfic">
-										<input class="input" placeholder="Price of Delivery" type="number"></input>
-									</div>`;
+																																																<input class="input" placeholder="Price of Delivery" type="number"></input>
+																																															</div>`;
 							const select = document.getElementById("deliverySelect");
 							data
 								.filter((item) => item.A0_NAME === "LT")
@@ -131,16 +153,16 @@
 				} else if (eventValue === "LP EXPRESS") {
 					// if LP EXPRESS Choosen than you need to enter Post terminal name manually
 					field1.innerHTML = `<div class="control is-clearfic">
-							<input class="input" placeholder="Post Terminal Name" type="text"></input>
-							</div>`;
+																																													<input class="input" placeholder="Post Terminal Name" type="text"></input>
+																																													</div>`;
 					field2.innerHTML = `<div class="control is-clearfic">
-							<input class="input" placeholder="Price of Delivery" type="number"></input>
-						</div>`;
+																																													<input class="input" placeholder="Price of Delivery" type="number"></input>
+																																												</div>`;
 				} else {
 					field2.innerHTML = ""; // any other case you need only price of delivery
 					field1.innerHTML = `<div class="control is-clearfic">
-							<input class="input" placeholder="Price of Delivery" type="number"></input>
-						</div>`;
+																																													<input class="input" placeholder="Price of Delivery" type="number"></input>
+																																												</div>`;
 				}
 			},
 		},
@@ -148,13 +170,10 @@
 </script>
 
 <style scoped>
-	.clientSection {
+	.sectionWidth {
 		max-width: 960px;
 	}
-	.clientSection2 {
-		margin-top: 25px;
-	}
-	.order {
-		margin-top: 35px;
+	form > .field {
+		padding-bottom: 10px;
 	}
 </style>
