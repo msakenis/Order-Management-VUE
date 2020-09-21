@@ -1,29 +1,49 @@
 <template>
 	<div class="viewOrders">
 		<Notification v-if="isActive" :type="notifType" :message="errorMessage" />
-		<b-table :data="data">
-			<b-table-column field="orderNo" label="Order No." sortable v-slot="props">{{ props.row.orderNo }}</b-table-column>
-			<b-table-column field="name" label="Name" sortable v-slot="props">{{ props.row.name }}</b-table-column>
-			<b-table-column field="date" label="Date" sortable centered v-slot="props">
+		<b-table :data="data" hoverable mobile-cards>
+			<b-table-column
+				field="orderNo"
+				label="Order No."
+				sortable
+				searchable
+				centered
+				width="98"
+				v-slot="props"
+			>{{ props.row.orderNo }}</b-table-column>
+			<b-table-column field="name" label="Name" sortable searchable v-slot="props">{{ props.row.name }}</b-table-column>
+			<b-table-column field="date" label="Date" sortable searchable centered v-slot="props">
 				<span
 					class="tag is-primary"
-				>{{ (props.row.date!=="") ? new Date(props.row.date).toLocaleDateString("lt") : "No Date" }}</span>
+				>{{ (props.row.date!=="") ? new Date(props.row.date).toLocaleDateString() : "No Date" }}</span>
 				<!-- If no date in database show string -->
 			</b-table-column>
 			<b-table-column
 				field="description"
 				label="Description"
 				sortable
+				searchable
 				v-slot="props"
 			>{{props.row.description}}</b-table-column>
 			<b-table-column
 				field="deliveryMeth"
 				label="Delivery Method"
 				sortable
+				searchable
 				v-slot="props"
 			>{{ props.row.deliveryMeth }}</b-table-column>
+			<b-table-column
+				field="orderValue"
+				label="Order Value"
+				sortable
+				searchable
+				centered
+				width="98"
+				v-slot="props"
+			>{{ props.row.orderValue }} &euro;</b-table-column>
 			<b-table-column field="action" label="Action" v-slot="props">
 				<b-button
+					class="actionBtn"
 					tag="router-link"
 					type="is-primary"
 					outlined
@@ -83,11 +103,11 @@
 							productsCodes: doc.data().productsCodes,
 							size: doc.data().size,
 							description: doc.data().description,
-							orderValue: doc.data().orderValue,
+							orderValue: doc.data().orderValue || 0,
 							deliveryMeth: doc.data().deliveryMeth,
 							omniva: doc.data().omniva,
 							lpExpress: doc.data().lpExpress,
-							delPrice: doc.data().delPrice,
+							delPrice: doc.data().delPrice || 0,
 							payment: doc.data().payment,
 							ordered: doc.data().ordered,
 							sent: doc.data().sent,
@@ -105,3 +125,8 @@
 		},
 	};
 </script>
+<style scoped>
+	.actionBtn {
+		margin-right: 5px;
+	}
+</style>
