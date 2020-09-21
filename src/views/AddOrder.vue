@@ -93,7 +93,13 @@
 					</b-select>
 				</b-field>
 				<b-field>
-					<b-select id="omnivaSelect" v-model="omniva" v-if="omnivaSelection"></b-select>
+					<b-select
+						id="omnivaSelect"
+						v-model="omniva"
+						:loading="selectLoader"
+						placeholder="Select Omniva terminal"
+						v-if="omnivaSelection"
+					></b-select>
 					<b-input v-model="lpExpress" v-if="lpExpressSelection" placeholder="Post terminal name"></b-input>
 				</b-field>
 			</b-field>
@@ -172,16 +178,17 @@
 				productsCodes: "",
 				size: "",
 				description: "",
-				orderValue: "",
-				deliveryMeth: "",
-				omniva: "",
+				orderValue: null,
+				deliveryMeth: null,
+				omniva: null,
 				lpExpress: "",
-				delPrice: "",
+				delPrice: null,
 				payment: false,
 				ordered: false,
 				sent: false,
 				tracking: "",
 				supplierNo: "",
+				selectLoader: false,
 			};
 		},
 		methods: {
@@ -192,13 +199,12 @@
 					//fetch Post terminals from Omniva API if Omniva selected
 					this.lpExpressSelection = false;
 					this.lpExpress = "";
+					this.omnivaSelection = true; // first need to show input to queryselect in "then"
+					this.selectLoader = true;
 					fetch(
 						`https://cors-anywhere.herokuapp.com/https://www.omniva.ee/locations.json`
 					)
-						.then((res) => {
-							this.omnivaSelection = true; // first need to show input to queryselect in next "then"
-							return res.json();
-						})
+						.then((res) => res.json())
 						.then((data) => {
 							const omnivaSelect = document.querySelector("#omnivaSelect");
 							data
@@ -209,7 +215,8 @@
 									option.value = element.NAME;
 									omnivaSelect.append(option);
 								});
-						});
+						})
+						.then(() => (this.selectLoader = false));
 				} else if (eventValue === "LP EXPRESS") {
 					this.omnivaSelection = false; // hide input needed if we change between delivery methods
 					this.lpExpressSelection = true;
