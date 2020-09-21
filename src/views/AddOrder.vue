@@ -216,7 +216,12 @@
 									omnivaSelect.append(option);
 								});
 						})
-						.then(() => (this.selectLoader = false));
+						.then(() => (this.selectLoader = false))
+						.catch((error) => {
+							this.isActive = true;
+							this.notifType = "is-light is-danger";
+							this.errorMessage = `Please refresh, if the error persists - contact the administrator of the website. Error: "${error.message}"`;
+						});
 				} else if (eventValue === "LP EXPRESS") {
 					this.omnivaSelection = false; // hide input needed if we change between delivery methods
 					this.lpExpressSelection = true;
@@ -257,10 +262,8 @@
 						supplierNo: this.supplierNo,
 					})
 					.then(() => {
+						this.success();
 						this.btnType = "is-primary";
-						this.isActive = true;
-						this.notifType = "is-light is-success";
-						this.errorMessage = "You have added order successfully.";
 					})
 					.catch((error) => {
 						this.btnType = "is-primary";
@@ -268,6 +271,13 @@
 						this.notifType = "is-light is-danger";
 						this.errorMessage = `Please refresh, if the error persists - contact the administrator of the website. Error:${error.message}`;
 					});
+			},
+			success() {
+				this.$buefy.notification.open({
+					message: "You have added order successfully.",
+					type: "is-success",
+					position: "is-top",
+				});
 			},
 		},
 	};
