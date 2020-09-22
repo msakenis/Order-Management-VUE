@@ -198,7 +198,7 @@
 				if (eventValue === "Omniva") {
 					//fetch Post terminals from Omniva API if Omniva selected
 					this.lpExpressSelection = false;
-					this.lpExpress = "";
+					this.lpExpress = null;
 					this.omnivaSelection = true; // first need to show input to queryselect in "then"
 					this.selectLoader = true;
 					fetch(
@@ -225,12 +225,12 @@
 				} else if (eventValue === "LP EXPRESS") {
 					this.omnivaSelection = false; // hide input needed if we change between delivery methods
 					this.lpExpressSelection = true;
-					this.omniva = ""; //overwrite information if previously client selected
+					this.omniva = null; //overwrite information if previously client selected
 				} else {
 					this.omnivaSelection = false;
 					this.lpExpressSelection = false;
-					this.omniva = ""; //overwrite information if previously client selected other method
-					this.lpExpress = "";
+					this.omniva = null; //overwrite information if previously client selected other method
+					this.lpExpress = null;
 				}
 			},
 

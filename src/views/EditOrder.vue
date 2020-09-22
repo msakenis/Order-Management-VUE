@@ -139,7 +139,10 @@
 				</b-field>
 			</b-field>
 
-			<b-button native-type="submit" :type="btnType">Update</b-button>
+			<div class="buttons">
+				<b-button native-type="submit" :type="btnType">Update</b-button>
+				<b-button class="gap" @click="deleteSelected()" type="is-danger" icon-left="delete"></b-button>
+			</div>
 		</form>
 	</div>
 </template>
@@ -189,6 +192,7 @@
 				tracking: "",
 				supplierNo: "",
 				selectLoader: false,
+				successMessage: "",
 			};
 		},
 		methods: {
@@ -196,7 +200,7 @@
 				if (this.deliveryMeth === "Omniva") {
 					//fetch Post terminals from Omniva API if Omniva selected
 					this.lpExpressSelection = false;
-					this.lpExpress = "";
+					this.lpExpress = null;
 					this.omnivaSelection = true; // first need to show input to queryselect in "then"
 					this.selectLoader = true;
 					fetch(
@@ -223,12 +227,12 @@
 				} else if (this.deliveryMeth === "LP EXPRESS") {
 					this.omnivaSelection = false; // hide input needed if we change between delivery methods
 					this.lpExpressSelection = true;
-					this.omniva = ""; //overwrite information if previously client selected
+					this.omniva = null; //overwrite information if previously client selected
 				} else {
 					this.omnivaSelection = false;
 					this.lpExpressSelection = false;
-					this.omniva = ""; //overwrite information if previously client selected other method
-					this.lpExpress = "";
+					this.omniva = null; //overwrite information if previously client selected other method
+					this.lpExpress = null;
 				}
 			},
 
@@ -261,6 +265,7 @@
 						supplierNo: this.supplierNo,
 					})
 					.then(() => {
+						this.successMessage = "You have updated an order successfully.";
 						this.success();
 						this.btnType = "is-primary";
 					})
@@ -273,10 +278,27 @@
 			},
 			success() {
 				this.$buefy.notification.open({
-					message: "You have updated an order successfully.",
+					message: this.successMessage,
 					type: "is-success",
 					position: "is-top",
 				});
+			},
+			deleteSelected() {
+				firebase
+					.firestore()
+					.collection("orders")
+					.doc(this.$route.params.id)
+					.delete()
+					.then(() => {
+						this.successMessage = "You have deleted an order successfully.";
+						this.success();
+						this.$router.push("/orders");
+					})
+					.catch((error) => {
+						this.isActive = true;
+						this.notifType = "is-light is-danger";
+						this.errorMessage = `Please refresh, if the error persists - contact the administrator of the website. Error:${error.message}`;
+					});
 			},
 		},
 		beforeMount() {
@@ -313,8 +335,7 @@
 					}
 				})
 				.then(() => {
-					this.deliveryDependency();
-					console.log(this.omniva);
+					this.deliveryDependency(); //to show inputs depending on delivery meth client selected
 				})
 				.catch((error) => {
 					this.isActive = true;
@@ -334,5 +355,8 @@
 	}
 	.euro {
 		max-width: 120px;
+	}
+	.gap {
+		margin-left: 60px;
 	}
 </style>
