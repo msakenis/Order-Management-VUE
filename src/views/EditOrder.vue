@@ -309,7 +309,6 @@
 				.get()
 				.then((doc) => {
 					if (doc.data()) {
-						console.log(doc.data());
 						doc.data().date
 							? (this.date = doc.data().date.toDate())
 							: (this.date = null);

@@ -43,17 +43,8 @@
 			>{{ props.row.orderValue }} &euro;</b-table-column>
 			<b-table-column field="status" label="Status" sortable searchable v-slot="props" class="red">
 				<span
-					:class="
-                        [
-                            'tag',
-                            {'is-info': 'WAITING FOR PAYMENT'==status(props.row.payment, props.row.ordered, props.row.sent)},
-                            {'is-warning': 'NEED TO ORDER'==status(props.row.payment, props.row.ordered, props.row.sent)},
-                            {'is-dark': 'WAITING FOR DELIVERY'==status(props.row.payment, props.row.ordered, props.row.sent)},
-                            {'is-danger': 'You cannot send goods without payment!'==status(props.row.payment, props.row.ordered, props.row.sent)},
-                            {'is-success': 'WAITING FOR CONFIRMATION'==status(props.row.payment, props.row.ordered, props.row.sent)},
-                            {'is-danger is-light': 'WAIT FOR PAYMENT(ORDERED)'==status(props.row.payment, props.row.ordered, props.row.sent)},
-                        ]"
-				>{{status(props.row.payment, props.row.ordered, props.row.sent)}}</span>
+					:class="['tag', status(props.row.payment, props.row.ordered, props.row.sent).status]"
+				>{{status(props.row.payment, props.row.ordered, props.row.sent).message}}</span>
 			</b-table-column>
 			<b-table-column field="action" centered width="120" label="Action" v-slot="props">
 				<b-button
@@ -101,17 +92,23 @@
 		methods: {
 			status(payment, ordered, sent) {
 				if (!payment && !ordered && !sent) {
-					return "WAITING FOR PAYMENT";
+					return { status: "is-info", message: "WAITING FOR PAYMENT" };
 				} else if (payment && !ordered && !sent) {
-					this.statusTag = "is-info";
-					return "NEED TO ORDER";
+					return { status: "is-warning", message: "NEED TO ORDER" };
 				} else if (payment && ordered && !sent) {
-					return "WAITING FOR DELIVERY";
+					return { status: "is-dark", message: "WAITING FOR DELIVERY" };
 				} else if (payment && ordered && sent) {
-					return "WAITING FOR CONFIRMATION";
+					return { status: "is-success", message: "WAITING FOR CONFIRMATION" };
 				} else if (!payment && ordered && !sent) {
-					return "WAIT FOR PAYMENT(ORDERED)";
-				} else return "You cannot send goods without payment!";
+					return {
+						status: "is-danger is-light",
+						message: "WAIT FOR PAYMENT(ORDERED)",
+					};
+				} else
+					return {
+						status: "is-danger",
+						message: "You cannot send goods without payment!",
+					};
 			},
 		},
 		beforeMount() {
