@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "../views/Home.vue";
 import Login from "../views/Login.vue";
 import Register from "../views/Register.vue";
 import firebase from "firebase/app";
@@ -11,12 +10,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    redirect: "/home",
-  },
-  {
-    path: "/home",
-    name: "Home",
-    component: Home,
+    redirect: "/orders",
   },
   {
     path: "/login",
@@ -39,12 +33,18 @@ const routes = [
     name: "Add Order",
     component: () =>
       import(/* webpackChunkName: "Add Order" */ "../views/AddOrder.vue"),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/edit-order/:id",
     name: "Edit Order",
     component: () =>
       import(/* webpackChunkName: "Edit Order" */ "../views/EditOrder.vue"),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/info-order/:id",
@@ -53,12 +53,18 @@ const routes = [
       import(
         /* webpackChunkName: "Information About the Order" */ "../views/OrderInformation.vue"
       ),
+    meta: {
+      requiresAuth: true,
+    },
   },
   {
     path: "/orders",
     name: "View Orders",
     component: () =>
       import(/* webpackChunkName: "View Orders" */ "../views/ViewOrders.vue"),
+    meta: {
+      requiresAuth: true,
+    },
   },
 ];
 
@@ -73,7 +79,7 @@ router.beforeEach((to, from, next) => {
     if (!user && to.matched.some((route) => route.meta.requiresAuth)) {
       next({ path: "/login" });
     } else if (user && to.matched.some((route) => route.meta.requiresAnon)) {
-      next({ path: "/home" });
+      next({ path: "/orders" });
     } else {
       next();
     }

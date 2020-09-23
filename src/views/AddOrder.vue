@@ -9,6 +9,7 @@
 						:first-day-of-week="1"
 						placeholder="Click to select..."
 						locale="lt-LT"
+						required
 					>
 						<button class="button is-primary" @click.prevent="date = new Date()">
 							<b-icon icon="calendar-today"></b-icon>
@@ -23,47 +24,47 @@
 				</b-field>
 
 				<b-field label="Order No.">
-					<b-input v-model="orderNo" placeholder="e.g 000987" maxlength="6"></b-input>
+					<b-input v-model="orderNo" placeholder="e.g 000987" maxlength="6" required></b-input>
 				</b-field>
 			</b-field>
 
 			<b-field class="sectionWidth" label="Client's Contact Information" grouped group-multiline>
 				<b-field>
-					<b-input v-model="name" placeholder="Name and Surname"></b-input>
+					<b-input class="inputClass" v-model="name" placeholder="Name and Surname" required></b-input>
 				</b-field>
 				<b-field expanded>
-					<b-input v-model="address" placeholder="Address"></b-input>
+					<b-input class="inputClass" v-model="address" placeholder="Address"></b-input>
 				</b-field>
 			</b-field>
 
 			<b-field class="sectionWidth" grouped group-multiline>
 				<b-field>
-					<b-input v-model="city" placeholder="City"></b-input>
+					<b-input class="inputClass" v-model="city" placeholder="City"></b-input>
 				</b-field>
 				<b-field expanded>
-					<b-input v-model="postCode" placeholder="Post Code"></b-input>
+					<b-input class="inputClass" v-model="postCode" placeholder="Post Code"></b-input>
 				</b-field>
 				<b-field>
 					<p class="control">
 						<span class="button is-static">+370</span>
 					</p>
-					<b-input v-model="phone" placeholder="66749666" expanded></b-input>
+					<b-input class="inputClass" v-model="phone" placeholder="66749666" expanded></b-input>
 				</b-field>
 			</b-field>
 
 			<b-field class="sectionWidth" label="Order Information" grouped group-multiline>
 				<b-field>
-					<b-input v-model="productsCodes" placeholder="Product codes"></b-input>
+					<b-input class="inputClass" v-model="productsCodes" placeholder="Product codes"></b-input>
 				</b-field>
 				<b-field>
-					<b-input v-model="size" placeholder="Size"></b-input>
+					<b-input class="inputClass" v-model="size" placeholder="Size"></b-input>
 				</b-field>
 				<b-field expanded>
-					<b-input v-model="description" placeholder="Products Description"></b-input>
+					<b-input class="inputClass" v-model="description" placeholder="Products Description"></b-input>
 				</b-field>
 			</b-field>
 
-			<b-field class="clientSection2">
+			<b-field>
 				<b-numberinput
 					:controls="false"
 					class="euro"
@@ -81,6 +82,7 @@
 			<b-field label="Delivery Information" grouped group-multiline>
 				<b-field>
 					<b-select
+						class="inputClass"
 						v-model="deliveryMeth"
 						@input="deliveryDependency()"
 						placeholder="Select delivery method"
@@ -95,6 +97,7 @@
 				<b-field>
 					<b-select
 						id="omnivaSelect"
+						class="inputClass"
 						v-model="omniva"
 						:loading="selectLoader"
 						placeholder="Select Omniva terminal"
@@ -103,10 +106,10 @@
 					<b-input v-model="lpExpress" v-if="lpExpressSelection" placeholder="Post terminal name"></b-input>
 				</b-field>
 			</b-field>
-			<b-field class="clientSection2">
+			<b-field>
 				<b-numberinput
 					:controls="false"
-					class="euro"
+					class="euro inputClass"
 					v-model="delPrice"
 					step="0.01"
 					placeholder="Delivery Price"
@@ -132,10 +135,10 @@
 
 			<b-field class="sectionWidth" grouped group-multiline>
 				<b-field>
-					<b-input v-model="tracking" placeholder="Tracking no."></b-input>
+					<b-input class="inputClass" v-model="tracking" placeholder="Tracking no."></b-input>
 				</b-field>
 				<b-field>
-					<b-input v-model="supplierNo" placeholder="Supplier order no."></b-input>
+					<b-input class="inputClass" v-model="supplierNo" placeholder="Supplier order no."></b-input>
 				</b-field>
 			</b-field>
 
@@ -287,8 +290,8 @@
 	.sectionWidth {
 		max-width: 960px;
 	}
-	form > .field {
-		padding-bottom: 10px;
+	.inputClass {
+		margin-bottom: 5px;
 	}
 	.euro {
 		max-width: 120px;

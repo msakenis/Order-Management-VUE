@@ -1,7 +1,11 @@
 <template>
 	<div class="orderInformation">
 		<Notification v-if="isActive" :type="notifType" :message="errorMessage" />
+
 		<section class="card">
+			<b-button tag="router-link" type="is-text" outlined size="is-small" :to="/edit-order/ + this.id">
+				<i class="far fa-edit"></i>
+			</b-button>
 			<div class="card-content">
 				<h1 class="title is-4">
 					<i class="fas fa-hashtag"></i>
@@ -12,7 +16,7 @@
 						<p class="subtitle is-5">Order Information</p>
 						<p class="dateText">
 							<strong>Order Date:</strong>
-							{{(this.date!=="" && this.date!==null) ? new Date(this.date).toLocaleDateString("lt") : "No Date"}}
+							{{this.date}}
 						</p>
 						<p>
 							<strong>Order Status:</strong>
@@ -55,38 +59,29 @@
 					</b-tab-item>
 
 					<b-tab-item label="Delivery Information">
-						<table class="table is-fullwidth">
+						<table class="table">
 							<thead>
 								<th>Delivery Method</th>
 								<th>Delivery Info</th>
 								<th>Delivery Price</th>
-								<th>Shippment Address</th>
 							</thead>
 							<tbody>
 								<tr>
 									<td>{{this.deliveryMeth}}</td>
 									<td>{{this.omniva ? this.omniva : this.lpExpress}}</td>
 									<td>{{this.delPrice}} &euro;</td>
-									<td>{{this.address +" "+ this.city +" "+ this.postCode}}</td>
 								</tr>
 							</tbody>
-						</table>
-					</b-tab-item>
-
-					<b-tab-item label="Client Contact Information">
-						<table class="table is-fullwidth">
 							<thead>
-								<th>Product Codes</th>
-								<th>Sizes</th>
-								<th>Product Description</th>
-								<th>Order Value</th>
+								<th>Shippment Address</th>
+								<th>Tracking no.</th>
+								<th>Supplier order no.</th>
 							</thead>
 							<tbody>
 								<tr>
-									<td>{{this.productsCodes}}</td>
-									<td>{{this.size}}</td>
-									<td>{{this.description}}</td>
-									<td>{{this.orderValue}} &euro;</td>
+									<td>{{this.address +" "+ this.city +" "+ this.postCode}}</td>
+									<td>{{this.tracking}}</td>
+									<td>{{this.supplierNo}}</td>
 								</tr>
 							</tbody>
 						</table>
@@ -112,7 +107,7 @@
 				isActive: false,
 				errorMessage: "",
 				notifType: "",
-				btnType: "is-primary",
+				date: null,
 				orderNo: "",
 				name: "",
 				address: "",
@@ -134,6 +129,7 @@
 				supplierNo: "",
 				selectLoader: false,
 				successMessage: "",
+				id: "",
 			};
 		},
 		methods: {
@@ -166,9 +162,10 @@
 				.get()
 				.then((doc) => {
 					if (doc.data()) {
-						doc.data().date
-							? (this.date = doc.data().date.toDate())
-							: (this.date = null);
+						this.id = doc.id;
+						this.date = doc.data().date
+							? new Date(doc.data().date.toDate()).toLocaleDateString("lt-LT")
+							: "No Date";
 						this.orderNo = doc.data().orderNo;
 						this.name = doc.data().name;
 						this.address = doc.data().address;
@@ -208,5 +205,11 @@
 	}
 	#tagger {
 		margin-left: 10px;
+	}
+	.card {
+		min-height: 70vh;
+	}
+	thead {
+		margin-top: 20px;
 	}
 </style>

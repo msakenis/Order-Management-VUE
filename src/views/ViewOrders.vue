@@ -13,10 +13,7 @@
 			>{{ props.row.orderNo }}</b-table-column>
 			<b-table-column field="name" label="Name" sortable searchable v-slot="props">{{ props.row.name }}</b-table-column>
 			<b-table-column field="date" label="Date" sortable searchable centered v-slot="props">
-				<span
-					class="tag is-primary"
-				>{{ (props.row.date!=="") ? new Date(props.row.date).toLocaleDateString() : "No Date" }}</span>
-				<!-- If no date in database show string -->
+				<span class="tag is-primary">{{ props.row.date }}</span>
 			</b-table-column>
 			<b-table-column
 				field="description"
@@ -44,7 +41,7 @@
 			<b-table-column field="status" label="Status" sortable searchable v-slot="props" class="red">
 				<span
 					:class="['tag', status(props.row.payment, props.row.ordered, props.row.sent).status]"
-				>{{status(props.row.payment, props.row.ordered, props.row.sent).message}}</span>
+				>{{props.row.status}}</span>
 			</b-table-column>
 			<b-table-column field="action" centered width="120" label="Action" v-slot="props">
 				<b-button
@@ -120,7 +117,9 @@
 					snapshot.docs.forEach((doc) =>
 						this.data.push({
 							id: doc.id,
-							date: doc.data().date ? doc.data().date.toDate() : "",
+							date: doc.data().date
+								? new Date(doc.data().date.toDate()).toLocaleDateString("lt-LT")
+								: "No Date", //converts the date to LT and threre is no date enter string "no date"
 							orderNo: doc.data().orderNo,
 							name: doc.data().name,
 							address: doc.data().address,
@@ -140,10 +139,15 @@
 							sent: doc.data().sent,
 							tracking: doc.data().tracking,
 							supplierNo: doc.data().supplierNo,
+							status: this.status(
+								//checks parameters in database and runs f which state the status of order
+								doc.data().payment,
+								doc.data().ordered,
+								doc.data().sent
+							).message,
 						})
 					)
 				)
-				.then(() => console.log(this.data))
 				.catch((error) => {
 					this.isActive = true;
 					this.notifType = "is-light is-danger";
