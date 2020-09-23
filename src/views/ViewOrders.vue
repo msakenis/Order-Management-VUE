@@ -184,7 +184,7 @@ export default {
           })
         )
       )
-      .then(() => this.data.sort((a, b) => new Date(b.date) - new Date(a.date)))
+      .then(() => this.data.sort((a, b) => b.id - a.id))
       .catch((error) => {
         this.isActive = true;
         this.notifType = "is-light is-danger";

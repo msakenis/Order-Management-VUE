@@ -257,7 +257,7 @@ export default {
       supplierNo: "",
       selectLoader: false,
       ids: [],
-      nextOrderNo: 100001,
+      nextOrderNo: null,
     };
   },
   methods: {
@@ -334,6 +334,7 @@ export default {
           this.success();
           this.generateOrderNo();
           this.btnType = "is-primary";
+          this.$router.push("/orders");
         })
         .catch((error) => {
           this.btnType = "is-primary";
@@ -357,7 +358,9 @@ export default {
         .then((snapshot) =>
           snapshot.docs.forEach((doc) => {
             this.ids.push(doc.id);
-            this.nextOrderNo = Math.max(...this.ids) + 1;
+            this.nextOrderNo = this.nextOrderNo
+              ? Math.max(...this.ids) + 1
+              : 100001;
           })
         )
         .catch((error) => {
