@@ -27,7 +27,14 @@
         </b-field>
 
         <b-field label="Order No.">
-          <b-input v-model="nextOrderNo" maxlength="6" required></b-input>
+          <b-numberinput
+            :controls="false"
+            v-model="nextOrderNo"
+            step="1"
+            min="100001"
+            max="999999"
+            required
+          ></b-numberinput>
         </b-field>
       </b-field>
 
@@ -414,9 +421,8 @@ export default {
         .then((snapshot) =>
           snapshot.docs.forEach((doc) => {
             this.ids.push(doc.id);
-            this.nextOrderNo = this.nextOrderNo
-              ? Math.max(...this.ids) + 1
-              : 100001;
+            this.nextOrderNo =
+              this.nextOrderNo !== null ? Math.max(...this.ids) + 1 : 100001;
           })
         )
         .catch((error) => {
@@ -427,7 +433,7 @@ export default {
     },
     addproduct() {
       // method which adds products in table for further add to db
-      if (this.description || this.quantity || this.price) {
+      if (this.description && this.quantity && this.price) {
         // validation if any entered
         this.showTable = true;
         this.fieldType = null;

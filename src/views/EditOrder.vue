@@ -430,7 +430,7 @@ export default {
     },
     addproduct() {
       // method which adds products in table for further add to db
-      if (this.description || this.quantity || this.price) {
+      if (this.description && this.quantity && this.price) {
         // validation if any entered
         this.showTable = true;
         this.fieldType = null;
