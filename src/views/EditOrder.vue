@@ -31,7 +31,7 @@
           <p class="subtitle">{{ this.id }}</p>
         </b-field>
       </b-field>
-
+      <hr />
       <b-field
         class="sectionWidth"
         label="Client's Contact Information"
@@ -82,7 +82,7 @@
           ></b-input>
         </b-field>
       </b-field>
-
+      <hr />
       <b-field
         class="sectionWidth"
         label="Order Information"
@@ -185,6 +185,7 @@
           </b-table-column>
         </b-table>
       </b-field>
+      <hr />
       <b-field label="Delivery Information" grouped group-multiline>
         <b-field>
           <b-select
@@ -232,7 +233,7 @@
           </span>
         </p>
       </b-field>
-
+      <hr />
       <b-field label="Status Information" grouped group-multiline>
         <div class="field">
           <b-checkbox v-model="payment">PAID</b-checkbox>
@@ -261,7 +262,7 @@
           ></b-input>
         </b-field>
       </b-field>
-
+      <hr />
       <div class="buttons">
         <b-button native-type="submit" :type="btnType">Save Changes</b-button>
         <b-button
@@ -543,5 +544,12 @@ export default {
 }
 .plusBtn {
   margin-top: 4px;
+}
+.sectionBlock,
+.buttons {
+  margin-top: 20px;
+}
+.b-checkbox {
+  margin-bottom: 15px;
 }
 </style>

@@ -2,7 +2,8 @@
   <div class="addOrder">
     <Notification v-if="isActive" :type="notifType" :message="errorMessage" />
     <form v-on:submit.prevent="add">
-      <b-field grouped group-multiline>
+      <!-- Order date and no section start -->
+      <b-field class="sectionBlock sectionBottom" grouped group-multiline>
         <b-field label="Order Date">
           <b-datepicker
             v-model="date"
@@ -37,31 +38,35 @@
           ></b-numberinput>
         </b-field>
       </b-field>
+      <!-- Order date and no section end -->
 
-      <b-field
-        class="sectionWidth"
-        label="Client's Contact Information"
-        grouped
-        group-multiline
-      >
-        <b-field>
-          <b-input
-            class="inputClass"
-            v-model="name"
-            placeholder="Name and Surname"
-            required
-          ></b-input>
-        </b-field>
-        <b-field expanded>
-          <b-input
-            class="inputClass"
-            v-model="address"
-            placeholder="Address"
-          ></b-input>
+      <!-- Clients info section start -->
+      <b-field class="sectionBlock">
+        <b-field
+          class="sectionWidth"
+          label="Client's Contact Information"
+          grouped
+          group-multiline
+        >
+          <b-field>
+            <b-input
+              class="inputClass"
+              v-model="name"
+              placeholder="Name and Surname"
+              required
+            ></b-input>
+          </b-field>
+          <b-field expanded>
+            <b-input
+              class="inputClass"
+              v-model="address"
+              placeholder="Address"
+            ></b-input>
+          </b-field>
         </b-field>
       </b-field>
 
-      <b-field class="sectionWidth" grouped group-multiline>
+      <b-field class="sectionWidth sectionBottom" grouped group-multiline>
         <b-field>
           <b-input
             class="inputClass"
@@ -88,59 +93,64 @@
           ></b-input>
         </b-field>
       </b-field>
+      <!-- Clients info section end -->
 
-      <b-field
-        class="sectionWidth"
-        label="Order Information"
-        grouped
-        group-multiline
-      >
-        <b-field :type="fieldType" expanded>
-          <b-input
-            v-model="description"
-            placeholder="Products Description"
-          ></b-input>
-        </b-field>
-
-        <b-field>
-          <b-input class="small" v-model="size" placeholder="Size"></b-input>
-        </b-field>
-
-        <b-field>
-          <b-input v-model="productsCode" placeholder="Product Code"></b-input>
-        </b-field>
-
-        <b-field :type="fieldType">
-          <b-numberinput
-            :controls="false"
-            v-model="quantity"
-            class="small"
-            step="1"
-            placeholder="pcs"
-          ></b-numberinput>
-        </b-field>
-
-        <b-field :type="fieldType">
-          <b-numberinput
-            :controls="false"
-            class="small"
-            v-model="price"
-            step="0.01"
-            placeholder="€/pc"
-          ></b-numberinput>
-        </b-field>
-        <b-button
-          class="plusBtn"
-          @click="addproduct()"
-          type="is-primary"
-          outlined
-          rounded
-          size="is-small"
+      <b-field class="sectionBlock">
+        <b-field
+          class="sectionWidth sectionBottom"
+          label="Order Information"
+          grouped
+          group-multiline
         >
-          <i class="fas fa-plus"></i>
-        </b-button>
-      </b-field>
+          <b-field :type="fieldType" expanded>
+            <b-input
+              v-model="description"
+              placeholder="Products Description"
+            ></b-input>
+          </b-field>
 
+          <b-field>
+            <b-input class="small" v-model="size" placeholder="Size"></b-input>
+          </b-field>
+
+          <b-field>
+            <b-input
+              v-model="productsCode"
+              placeholder="Product Code"
+            ></b-input>
+          </b-field>
+
+          <b-field :type="fieldType">
+            <b-numberinput
+              :controls="false"
+              v-model="quantity"
+              class="small"
+              step="1"
+              placeholder="pcs"
+            ></b-numberinput>
+          </b-field>
+
+          <b-field :type="fieldType">
+            <b-numberinput
+              :controls="false"
+              class="small"
+              v-model="price"
+              step="0.01"
+              placeholder="€/pc"
+            ></b-numberinput>
+          </b-field>
+          <b-button
+            class="plusBtn"
+            @click="addproduct()"
+            type="is-primary"
+            outlined
+            rounded
+            size="is-small"
+          >
+            <i class="fas fa-plus"></i>
+          </b-button>
+        </b-field>
+      </b-field>
       <b-field>
         <b-table
           class="sectionWidth"
@@ -192,7 +202,12 @@
         </b-table>
       </b-field>
 
-      <b-field label="Delivery Information" grouped group-multiline>
+      <b-field
+        label="Delivery Information"
+        class="sectionBlock"
+        grouped
+        group-multiline
+      >
         <b-field>
           <b-select
             class="inputClass"
@@ -225,7 +240,7 @@
           ></b-input>
         </b-field>
       </b-field>
-      <b-field>
+      <b-field class="sectionBottom">
         <b-numberinput
           :controls="false"
           class="euro inputClass"
@@ -240,7 +255,12 @@
         </p>
       </b-field>
 
-      <b-field label="Status Information" grouped group-multiline>
+      <b-field
+        label="Status Information"
+        class="sectionBlock"
+        grouped
+        group-multiline
+      >
         <div class="field">
           <b-checkbox v-model="payment">PAID</b-checkbox>
         </div>
@@ -269,7 +289,9 @@
         </b-field>
       </b-field>
 
-      <b-button native-type="submit" :type="btnType">Confirm</b-button>
+      <b-button native-type="submit" class="btn" :type="btnType"
+        >Confirm</b-button
+      >
     </form>
   </div>
 </template>
@@ -486,5 +508,18 @@ export default {
 }
 .plusBtn {
   margin-top: 4px;
+}
+.sectionBottom {
+  margin-bottom: 30px;
+}
+.b-checkbox {
+  margin-bottom: 15px;
+}
+.sectionBlock:not(:first-child) {
+  border-top: 2px solid rgba(228, 217, 217, 0.541);
+  padding-top: 10px;
+}
+.btn {
+  margin-top: 20px;
 }
 </style>
