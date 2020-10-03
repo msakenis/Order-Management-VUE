@@ -73,6 +73,18 @@
           ]"
           >{{ props.row.status }}</span
         >
+        <b-tooltip
+          v-if="props.row.note != null"
+          class="note"
+          position="is-bottom"
+          type="is-light"
+          multilined
+        >
+          <i class="far fa-comment"></i>
+          <template v-slot:content>
+            {{ props.row.note }}
+          </template>
+        </b-tooltip>
       </b-table-column>
       <b-table-column
         field="action"
@@ -171,6 +183,7 @@ export default {
             payment: doc.data().payment,
             ordered: doc.data().ordered,
             sent: doc.data().sent,
+            note: doc.data().note,
             status: this.status(
               //checks parameters in database and runs f which state the status of order
               doc.data().payment,
@@ -192,5 +205,8 @@ export default {
 <style scoped>
 .actionBtn {
   margin-right: 5px;
+}
+.note {
+  margin-left: 10px;
 }
 </style>

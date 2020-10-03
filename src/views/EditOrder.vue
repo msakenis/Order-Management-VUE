@@ -261,8 +261,41 @@
             placeholder="Supplier order no."
           ></b-input>
         </b-field>
+        <b-field>
+          <b-tooltip
+            v-if="note == null"
+            position="is-bottom"
+            label="Click to add a Note about an Order"
+            size="is-small"
+            multilined
+          >
+            <b-button
+              class="plusBtn"
+              type="is-primary"
+              outlined
+              rounded
+              size="is-small"
+              @click="addNote"
+              ><i class="fas fa-comment-medical"></i
+            ></b-button>
+          </b-tooltip>
+          <b-tooltip v-else position="is-bottom" multilined>
+            <b-button
+              class="plusBtn"
+              type="is-primary"
+              outlined
+              rounded
+              size="is-small"
+              @click="note = null"
+              ><i class="fas fa-comment-slash"></i
+            ></b-button>
+            <template v-slot:content>
+              <b>Click to Delete a Note :</b>
+              {{ note }}
+            </template>
+          </b-tooltip>
+        </b-field>
       </b-field>
-      <hr />
       <div class="buttons">
         <b-button native-type="submit" :type="btnType">Save Changes</b-button>
         <b-button
@@ -326,6 +359,7 @@ export default {
       quantity: null,
       showTable: false,
       fieldType: null,
+      note: null,
     };
   },
   methods: {
@@ -392,6 +426,7 @@ export default {
           tracking: this.tracking,
           supplierNo: this.supplierNo,
           products: this.products,
+          note: this.note,
         })
         .then(() => {
           this.successMessage = "You have updated an order successfully.";
@@ -462,6 +497,21 @@ export default {
         this.showTable = false;
       }
     },
+    addNote() {
+      this.$buefy.dialog.prompt({
+        message: `NOTE TO ADD:`,
+        inputAttrs: {
+          placeholder: "Enter your note here...",
+          maxlength: 200,
+        },
+        trapFocus: true,
+        confirmText: "Add",
+        onConfirm: (value) => {
+          this.$buefy.toast.open(`Note added`);
+          this.note = value;
+        },
+      });
+    },
   },
   beforeMount() {
     firebase
@@ -492,6 +542,7 @@ export default {
           this.sent = doc.data().sent;
           this.tracking = doc.data().tracking;
           this.supplierNo = doc.data().supplierNo;
+          doc.data().note ? (this.note = doc.data().note) : (this.note = null);
 
           doc.data().products.forEach((item) => {
             //fetches from db and pushes data to array to add to table
