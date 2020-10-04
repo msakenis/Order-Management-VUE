@@ -4,7 +4,7 @@ import router from "./router";
 import "normalize.css";
 import Buefy from "buefy";
 import "buefy/dist/buefy.css";
-import "./services/firebase-demo";
+import "./services/firebase-config";
 import VueHtmlToPaper from "vue-html-to-paper";
 
 const options = {

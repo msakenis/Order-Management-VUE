@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
-src/services
+src/services/firebase.js
+src/services/firebase-demo.js
 /dist
 
 
