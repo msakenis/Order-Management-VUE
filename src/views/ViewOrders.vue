@@ -56,7 +56,7 @@
         centered
         width="110"
         v-slot="props"
-        >{{ props.row.orderValue }} &euro;</b-table-column
+        >{{ props.row.orderValue + props.row.delPrice }} &euro;</b-table-column
       >
       <b-table-column
         field="status"
@@ -180,6 +180,7 @@ export default {
             description: desc,
             orderValue: orderValue,
             deliveryMeth: doc.data().deliveryMeth,
+            delPrice: doc.data().delPrice,
             payment: doc.data().payment,
             ordered: doc.data().ordered,
             sent: doc.data().sent,

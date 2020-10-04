@@ -160,6 +160,9 @@
           </b-tab-item>
         </b-tabs>
       </div>
+      <h3 class="subtitle is-5 value">
+        TOTAL ORDER VALUE: {{ this.orderValue + this.delPrice }} &euro;
+      </h3>
     </section>
   </div>
 </template>
@@ -306,5 +309,10 @@ thead {
 }
 .tableFooter {
   padding-right: 35px;
+}
+.value {
+  text-align: right;
+  padding-bottom: 30px;
+  margin-right: 40px;
 }
 </style>
