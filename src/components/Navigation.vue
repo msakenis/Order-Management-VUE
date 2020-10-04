@@ -8,6 +8,7 @@
       </template>
 
       <template v-if="loggedIn" slot="start">
+        <!-- Show buttons only if logged in -->
         <b-navbar-item
           tag="router-link"
           v-for="link in links"
@@ -24,6 +25,7 @@
           </div>
 
           <div class="buttons" v-else>
+            <!-- Show buttons if not logged in -->
             <b-button tag="router-link" to="/register" type="is-primary"
               >Register</b-button
             >

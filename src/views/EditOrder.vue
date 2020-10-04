@@ -2,6 +2,7 @@
   <div class="editOrder">
     <Notification v-if="isActive" :type="notifType" :message="errorMessage" />
     <form v-on:submit.prevent="update">
+      <!-- Order date and no section start -->
       <b-field grouped group-multiline>
         <b-field label="Order Date">
           <b-datepicker
@@ -31,7 +32,9 @@
           <p class="subtitle">{{ this.id }}</p>
         </b-field>
       </b-field>
-      <hr />
+      <!-- Order date and no section ends -->
+
+      <!--Client Contact information section starts -->
       <b-field
         class="sectionWidth"
         label="Client's Contact Information"
@@ -82,7 +85,9 @@
           ></b-input>
         </b-field>
       </b-field>
-      <hr />
+      <!--Client Contact information section ends -->
+
+      <!--Order information section starts -->
       <b-field
         class="sectionWidth"
         label="Order Information"
@@ -185,7 +190,9 @@
           </b-table-column>
         </b-table>
       </b-field>
-      <hr />
+      <!--Order information section ends -->
+
+      <!--Delivery information section starts -->
       <b-field label="Delivery Information" grouped group-multiline>
         <b-field>
           <b-select
@@ -233,7 +240,9 @@
           </span>
         </p>
       </b-field>
-      <hr />
+      <!--Delivery information section ends -->
+
+      <!--Order status information section starts -->
       <b-field label="Status Information" grouped group-multiline>
         <div class="field">
           <b-checkbox v-model="payment">PAID</b-checkbox>
@@ -296,6 +305,8 @@
           </b-tooltip>
         </b-field>
       </b-field>
+      <!--Order status information section ends -->
+
       <div class="buttons">
         <b-button native-type="submit" :type="btnType">Save Changes</b-button>
         <b-button

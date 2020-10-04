@@ -95,6 +95,7 @@
       </b-field>
       <!-- Clients info section end -->
 
+      <!-- Order Information Section starts -->
       <b-field class="sectionBlock">
         <b-field
           class="sectionWidth sectionBottom"
@@ -201,7 +202,9 @@
           </b-table-column>
         </b-table>
       </b-field>
+      <!-- Order Information Section ends -->
 
+      <!-- Delivery Information Section starts -->
       <b-field
         label="Delivery Information"
         class="sectionBlock"
@@ -254,7 +257,9 @@
           </span>
         </p>
       </b-field>
+      <!-- Delivery Information Section ends -->
 
+      <!-- Status Information Section starts -->
       <b-field
         label="Status Information"
         class="sectionBlock"
@@ -322,7 +327,7 @@
           </b-tooltip>
         </b-field>
       </b-field>
-
+      <!-- Status Information Section ends -->
       <b-button native-type="submit" class="btn" :type="btnType"
         >Confirm</b-button
       >
