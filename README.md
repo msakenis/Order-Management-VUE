@@ -10,17 +10,6 @@
     Manage track yours orders (payment, contact, delivery information and etc.)
 </p>
 
-<!-- TABLE OF CONTENTS -->
-
-## Table of Contents
-
-- [About the Project](#about-the-project)
-  - [Built With](#built-with)
-- [Getting Started](#getting-started)
-  - [Demo](#demo)
-  - [Installation](#installation)
-- [Usage](#usage)
-
 <!-- ABOUT THE PROJECT -->
 
 ## :bulb: About The Project
@@ -41,12 +30,13 @@ This is simply Order management app which purpose to make easier to track and ma
 
 ### :mag_right: Demo version
 
-You can try the demo version here <a href="https://fir-order-management-6a828.web.app/">here</a>
-PLEASE USE USER TO LOGIN :
-email : demo@demo.lt
+You can try the demo version <a href="https://fir-order-management-6a828.web.app/">here</a>
+
+PLEASE USE USER TO LOGIN:
+email: demo@demo.lt
 password: 123456
 
-firebase rules set that only demo user can add orders.
+Firebase rules set that only demo user can add orders.
 
 ### :computer: Installation
 
