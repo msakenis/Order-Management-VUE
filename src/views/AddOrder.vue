@@ -153,54 +153,61 @@
         </b-field>
       </b-field>
       <b-field>
-        <b-table
-          class="sectionWidth"
-          :data="products"
-          v-if="showTable"
-          hoverable
-          mobile-cards
-        >
-          <b-table-column
-            field="description"
-            label="Description"
-            centered
-            v-slot="props"
-            >{{ props.row.description }}</b-table-column
+        <transition name="bounce">
+          <b-table
+            class="sectionWidth"
+            :data="products"
+            v-if="showTable"
+            hoverable
+            mobile-cards
           >
-          <b-table-column field="size" label="Size" centered v-slot="props">{{
-            props.row.size
-          }}</b-table-column>
-          <b-table-column
-            field="productsCode"
-            label="Product Code"
-            centered
-            v-slot="props"
-            >{{ props.row.productsCode }}</b-table-column
-          >
-          <b-table-column
-            field="quantity"
-            label="Quantity"
-            centered
-            v-slot="props"
-            >{{
-              props.row.quantity === 1
-                ? props.row.quantity + " pc"
-                : props.row.quantity + " pcs"
-            }}</b-table-column
-          >
-          <b-table-column field="price" label="Price" centered v-slot="props"
-            >{{ props.row.price }} &euro;</b-table-column
-          >
-          <b-table-column field="action" label="Action" centered v-slot="props">
-            <b-button
-              @click="removeFromTable(props.row.id)"
-              type="is-text"
-              size="is-small"
+            <b-table-column
+              field="description"
+              label="Description"
+              centered
+              v-slot="props"
+              >{{ props.row.description }}</b-table-column
             >
-              <i class="fas fa-trash-alt"></i>
-            </b-button>
-          </b-table-column>
-        </b-table>
+            <b-table-column field="size" label="Size" centered v-slot="props">{{
+              props.row.size
+            }}</b-table-column>
+            <b-table-column
+              field="productsCode"
+              label="Product Code"
+              centered
+              v-slot="props"
+              >{{ props.row.productsCode }}</b-table-column
+            >
+            <b-table-column
+              field="quantity"
+              label="Quantity"
+              centered
+              v-slot="props"
+              >{{
+                props.row.quantity === 1
+                  ? props.row.quantity + " pc"
+                  : props.row.quantity + " pcs"
+              }}</b-table-column
+            >
+            <b-table-column field="price" label="Price" centered v-slot="props"
+              >{{ props.row.price }} &euro;</b-table-column
+            >
+            <b-table-column
+              field="action"
+              label="Action"
+              centered
+              v-slot="props"
+            >
+              <b-button
+                @click="removeFromTable(props.row.id)"
+                type="is-text"
+                size="is-small"
+              >
+                <i class="fas fa-trash-alt"></i>
+              </b-button>
+            </b-table-column>
+          </b-table>
+        </transition>
       </b-field>
       <!-- Order Information Section ends -->
 
@@ -228,19 +235,21 @@
           </b-select>
         </b-field>
         <b-field>
-          <b-select
-            id="omnivaSelect"
-            class="inputClass"
-            v-model="omniva"
-            :loading="selectLoader"
-            placeholder="Select Omniva terminal"
-            v-if="omnivaSelection"
-          ></b-select>
-          <b-input
-            v-model="lpExpress"
-            v-if="lpExpressSelection"
-            placeholder="Post terminal name"
-          ></b-input>
+          <transition name="bounce" mode="out-in">
+            <b-select
+              id="omnivaSelect"
+              class="inputClass"
+              v-model="omniva"
+              :loading="selectLoader"
+              placeholder="Select Omniva terminal"
+              v-if="omnivaSelection"
+            ></b-select>
+            <b-input
+              v-model="lpExpress"
+              v-if="lpExpressSelection"
+              placeholder="Post terminal name"
+            ></b-input>
+          </transition>
         </b-field>
       </b-field>
       <b-field class="sectionBottom">
@@ -292,39 +301,44 @@
             placeholder="Supplier order no."
           ></b-input>
         </b-field>
+
         <b-field>
-          <b-tooltip
-            v-if="note == null"
-            position="is-bottom"
-            label="Click to add a Note about an Order"
-            size="is-small"
-            multilined
-          >
-            <b-button
-              class="plusBtn"
-              type="is-primary"
-              outlined
-              rounded
+          <transition name="slide-fade">
+            <b-tooltip
+              v-if="note == null"
+              position="is-bottom"
+              label="Click to add a Note about an Order"
               size="is-small"
-              @click="addNote"
-              ><i class="fas fa-comment-medical"></i
-            ></b-button>
-          </b-tooltip>
-          <b-tooltip v-else position="is-bottom" multilined>
-            <b-button
-              class="plusBtn"
-              type="is-primary"
-              outlined
-              rounded
-              size="is-small"
-              @click="note = null"
-              ><i class="fas fa-comment-slash"></i
-            ></b-button>
-            <template v-slot:content>
-              <b>Click to Delete a Note :</b>
-              {{ note }}
-            </template>
-          </b-tooltip>
+              multilined
+            >
+              <b-button
+                class="plusBtn"
+                type="is-primary"
+                outlined
+                rounded
+                size="is-small"
+                @click="addNote"
+                ><i class="fas fa-comment-medical"></i
+              ></b-button>
+            </b-tooltip>
+          </transition>
+          <transition name="slide-fade">
+            <b-tooltip v-if="note != null" position="is-bottom" multilined>
+              <b-button
+                class="plusBtn"
+                type="is-primary"
+                outlined
+                rounded
+                size="is-small"
+                @click="note = null"
+                ><i class="fas fa-comment-slash"></i
+              ></b-button>
+              <template v-slot:content>
+                <b>Click to Delete a Note :</b>
+                {{ note }}
+              </template>
+            </b-tooltip>
+          </transition>
         </b-field>
       </b-field>
       <!-- Status Information Section ends -->
@@ -580,5 +594,33 @@ export default {
 }
 .btn {
   margin-top: 20px;
+}
+
+/* CSS for transitions */
+.slide-fade-enter-active {
+  transition: all 0.8s ease;
+}
+
+.slide-fade-enter {
+  transform: translateX(10px);
+  opacity: 0;
+}
+
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
+}
+.bounce-leave-active {
+  animation: bounce-in 0.5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>
