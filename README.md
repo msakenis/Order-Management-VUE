@@ -14,7 +14,7 @@
 
 ## :bulb: About The Project
 
-This is simply an Order management app which purposes to make it easier to track and manage orders status and client information.
+This is simply an Order management app that purposes to make it easier to track and manage orders status and client information.
 
 ### :hammer: Built With
 
