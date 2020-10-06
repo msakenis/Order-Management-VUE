@@ -186,7 +186,6 @@ export default {
       .collection("orders")
       .get()
       .then((snapshot) => {
-        console.log(snapshot.docs);
         if (snapshot.docs.length !== 0) {
           snapshot.docs.forEach((doc) => {
             this.showData = true;
