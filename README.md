@@ -58,7 +58,7 @@ npm install
 
 - create a new web project and copy the config src/services/firebase-config.js,
 - enable authentification by email and password and google,
-- create firestore database (if you are going to use this app not only for a demo, do not forget to set the rules!)
+- create a Firestore database (if you are going to use this app not only for a demo, do not forget to set the rules!)
 
   <!-- USAGE EXAMPLES -->
 
@@ -66,7 +66,7 @@ npm install
 
 1. Click on "Add new order" and create your first order!
 
-You can to add and edit the following information :
+You can add and edit the following information :
 
 - Order Date(by default always today, but you can change to any);
 - Order no. (Automatically generated unique six symbol number by the system);
